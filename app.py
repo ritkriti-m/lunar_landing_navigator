@@ -26,39 +26,60 @@ st.markdown(
       :root { color-scheme: dark; }
       html, body, [class*="css"] { font-family: 'Manrope', sans-serif; }
       .stApp { background: #0b0e0e; color: #edf0e9; }
+      
+      /* Hide/Darken Streamlit's default top header bar */
+      [data-testid="stHeader"] { background: transparent !important; }
+      [data-testid="stToolbar"] { right: 2rem; }
+      
       .block-container { max-width: none; padding: 0 1.5rem 1.5rem; }
       [data-testid="stSidebar"] { width: 350px !important; background: #101313; border-right: 1px solid #2b3030; }
       [data-testid="stSidebar"] > div:first-child { padding: 0 1.35rem 1.2rem; }
-      h1, h2, h3, p { color: #edf0e9; }
+      
+      h1, h2, h3, p { color: #edf0e9 !important; }
+      
+      /* Custom styling for Streamlit buttons to match Mission Control */
+      .stButton > button {
+          background-color: #151919 !important;
+          color: #dff86f !important;
+          border: 1px solid #39413f !important;
+          font-family: 'DM Mono', monospace !important;
+          font-weight: 500;
+          transition: all 0.2s ease;
+      }
+      .stButton > button:hover {
+          border-color: #dff86f !important;
+          background-color: rgba(223,248,111,0.1) !important;
+      }
+
       .brandbar { height: 72px; display: flex; align-items: center; justify-content: space-between; margin: 0 -1.5rem 1.2rem; padding: 0 1.5rem; border-bottom: 1px solid #2b3030; background: #0a0c0c; }
-      .brand { font: 500 17px 'DM Mono', monospace; letter-spacing: .06em; }
+      .brand { font: 500 17px 'DM Mono', monospace; letter-spacing: .06em; color: #edf0e9; }
       .brand b { color: #dff86f; font-weight: 500; }
       .brand em { color: #68706f; font-style: normal; }
       .telemetry { color: #9da6a3; font: 500 9px 'DM Mono', monospace; letter-spacing: .14em; }
       .telemetry i { display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: #dff86f; box-shadow: 0 0 12px #dff86f; }
       .side-head { padding: 1.5rem 0 .65rem; }
       .kicker, .metric-label { color: #78817f; font: 500 9px 'DM Mono', monospace; letter-spacing: .15em; text-transform: uppercase; }
-      .side-head h1 { margin: .45rem 0 0; font-size: 25px; font-weight: 500; }
+      .side-head h1 { margin: .45rem 0 0; font-size: 25px; font-weight: 500; color: #edf0e9 !important; }
       .site-card { margin: .85rem 0; padding: 1rem; border: 1px solid #39413f; background: linear-gradient(90deg, rgba(223,248,111,.07), #151919 60%); border-left: 2px solid #dff86f; }
-      .site-card h3 { margin: 0 0 .35rem; font-size: 13px; font-weight: 600; }
-      .site-card p { margin: 0; color: #747d7a; font: 8px 'DM Mono', monospace; }
+      .site-card h3 { margin: 0 0 .35rem; font-size: 13px; font-weight: 600; color: #edf0e9 !important; }
+      .site-card p { margin: 0; color: #9da6a3; font: 8px 'DM Mono', monospace; }
       .detail { display: grid; grid-template-columns: minmax(230px, 1.5fr) repeat(4, minmax(90px, .5fr)); margin-top: .8rem; border: 1px solid #303634; background: #111515; }
       .detail > div { padding: 1rem; }
       .detail > div + div { border-left: 1px solid #303634; }
-      .detail h2 { margin: .25rem 0; font-size: 18px; font-weight: 500; }
-      .detail p { margin: 0; color: #7f8985; font-size: 9px; line-height: 1.5; }
-      .detail strong { display: block; margin-top: .4rem; font: 500 15px 'DM Mono', monospace; }
+      .detail h2 { margin: .25rem 0; font-size: 18px; font-weight: 500; color: #edf0e9 !important; }
+      .detail p { margin: 0; color: #9da6a3; font-size: 9px; line-height: 1.5; }
+      .detail strong { display: block; margin-top: .4rem; font: 500 15px 'DM Mono', monospace; color: #edf0e9; }
       .detail .score { color: #dff86f; font-size: 22px; }
       .profile-head { display: flex; align-items: end; justify-content: space-between; padding: 1.5rem 0 1.2rem; border-bottom: 1px solid #303634; margin-bottom: 1.5rem; }
-      .profile-head h1 { margin: .35rem 0 .25rem; font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.045em; }
-      .profile-coords { color: #7d8783; font: 10px 'DM Mono', monospace; }
+      .profile-head h1 { margin: .35rem 0 .25rem; font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.045em; color: #edf0e9 !important; }
+      .profile-coords { color: #9da6a3; font: 10px 'DM Mono', monospace; }
       .profile-score { text-align: right; }
       .profile-score strong { display: block; color: #dff86f; font: 400 44px 'DM Mono', monospace; }
       .profile-panel { border: 1px solid #303634; background: #111515; }
       .profile-panel > div { padding: 1.15rem; }
       .profile-panel > div + div { border-top: 1px solid #303634; }
-      .profile-panel h3 { margin: .35rem 0 .45rem; font-size: 14px; font-weight: 600; }
-      .profile-panel p { margin: 0; color: #8b9591; font-size: 11px; line-height: 1.65; }
+      .profile-panel h3 { margin: .35rem 0 .45rem; font-size: 14px; font-weight: 600; color: #edf0e9 !important; }
+      .profile-panel p { margin: 0; color: #a3ad9d; font-size: 11px; line-height: 1.65; }
     </style>
     """,
     unsafe_allow_html=True,
