@@ -1,0 +1,15 @@
+# Environments
+env/
+venv/
+
+# Database files
+*.db
+*.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Mac/Windows system files
+.DS_Store
+Thumbs.db
