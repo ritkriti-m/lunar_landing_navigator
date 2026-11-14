@@ -64,12 +64,62 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- DATABASE CONNECTION & LOGIC ---
+# --- DATABASE CONNECTION & LOGIC (AUTO-BUILD IF MISSING) ---
+def initialize_database():
+    db_path = os.path.join('data', 'haworth.db')
+    if os.path.exists(db_path):
+        return  # Database already exists
+    
+    os.makedirs('data', exist_ok=True)
+    
+    # Locate CSV files in the data directory
+    sun_path = os.path.join('data', 'HW10_sunlight_visibility.csv')
+    earth_path = os.path.join('data', 'HW10_earth_visibility.csv')
+    
+    if os.path.exists(sun_path) and os.path.exists(earth_path):
+        sun_df = pd.read_csv(sun_path)
+        earth_df = pd.read_csv(earth_path)
+        
+        merged_ephem = pd.merge(
+            sun_df[['UTC', 'Solar elevation (degrees)', 'Terrain horizon (degrees)']].rename(columns={
+                'UTC': 'timestamp',
+                'Solar elevation (degrees)': 'sun_elevation',
+                'Terrain horizon (degrees)': 'terrain_horizon_sun'
+            }),
+            earth_df[['UTC', 'Earth elevation (degrees)', 'Terrain horizon (degrees)']].rename(columns={
+                'UTC': 'timestamp',
+                'Earth elevation (degrees)': 'earth_elevation',
+                'Terrain horizon (degrees)': 'terrain_horizon_earth'
+            }),
+            on='timestamp'
+        )
+    else:
+        merged_ephem = pd.DataFrame(columns=['timestamp', 'sun_elevation', 'terrain_horizon_sun', 'earth_elevation', 'terrain_horizon_earth'])
+
+    topo_data = [
+        {"site": "HW01", "latitude": -86.768, "longitude": -20.514, "elevation": -4100, "illumination": 42.10},
+        {"site": "HW02", "latitude": -86.808, "longitude": -21.719, "elevation": -4100, "illumination": 38.50},
+        {"site": "HW03", "latitude": -86.860, "longitude": -19.893, "elevation": -4100, "illumination": 41.20},
+        {"site": "HW04", "latitude": -86.568, "longitude": -21.473, "elevation": -4100, "illumination": 39.00},
+        {"site": "HW05", "latitude": -86.662, "longitude": -30.548, "elevation": -4100, "illumination": 45.30},
+        {"site": "HW06", "latitude": -87.050, "longitude": -24.240, "elevation": -4100, "illumination": 37.80},
+        {"site": "HW07", "latitude": -86.932, "longitude": -23.020, "elevation": -4100, "illumination": 40.40},
+        {"site": "HW08", "latitude": -86.924, "longitude": -25.809, "elevation": -4100, "illumination": 36.90},
+        {"site": "HW09", "latitude": -86.623, "longitude": -26.075, "elevation": -4100, "illumination": 43.70},
+        {"site": "HW10", "latitude": -86.527, "longitude": -14.876, "elevation": -4100, "illumination": 34.86},
+        {"site": "HW_K2023", "latitude": -86.990, "longitude": -24.254, "elevation": -4100, "illumination": 44.20}
+    ]
+    topo_df = pd.DataFrame(topo_data)
+
+    conn = sqlite3.connect(db_path)
+    merged_ephem.to_sql('ephemeris', conn, if_exists='replace', index=False)
+    topo_df.to_sql('topography', conn, if_exists='replace', index=False)
+    conn.close()
+
 @st.cache_data
 def get_ephemeris_data():
+    initialize_database()
     db_path = os.path.join('data', 'haworth.db')
-    if not os.path.exists(db_path):
-        return None
     conn = sqlite3.connect(db_path)
     df = pd.read_sql_query("SELECT * FROM ephemeris", conn)
     conn.close()
@@ -77,9 +127,8 @@ def get_ephemeris_data():
 
 @st.cache_data
 def get_topography_data():
+    initialize_database()
     db_path = os.path.join('data', 'haworth.db')
-    if not os.path.exists(db_path):
-        return None
     conn = sqlite3.connect(db_path)
     df = pd.read_sql_query("SELECT * FROM topography", conn)
     conn.close()
