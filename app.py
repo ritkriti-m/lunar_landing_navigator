@@ -149,13 +149,13 @@ if isinstance(raw_site_slug, list) and len(raw_site_slug) > 0:
 detail_name = site_lookup.get(raw_site_slug)
 initial_name = detail_name or next(iter(SITES))
 
-# --- PERSISTENT SIDEBAR ---
+# --- PERSISTENT SIDEBAR WITH LUNAR NAV TITLE ---
 with st.sidebar:
     st.markdown(
         """
         <div class="side-head">
-          <span class="kicker">SOUTH POLAR REGION · PYTHON</span>
-          <h1>Landing sites</h1>
+          <span style="font: 500 13px 'DM Mono', monospace; color: #dff86f; letter-spacing: .08em;"><b>◐</b>&nbsp; LUNAR NAV</span>
+          <h1 style="margin-top: 0.35rem;">Landing sites</h1>
         </div>
         """,
         unsafe_allow_html=True,
