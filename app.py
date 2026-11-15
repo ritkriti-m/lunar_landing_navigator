@@ -180,7 +180,7 @@ SITES = {
     "Haworth Crater (HW10)": {
         "subtitle": "South Pole",
         "coords": "86.527° S  14.876° W",
-        "elevation": "-4.1 km",
+        "elevation": "990.0m",
         "illumination": 34.86,
         "temperature": "-230°C",
         "score": 98,
@@ -195,7 +195,7 @@ SITES = {
     "Shackleton Ridge": {
         "subtitle": "South Pole",
         "coords": "89.90° S  0.00° E",
-        "elevation": "-1.3 km",
+        "elevation": "1300m",
         "illumination": 82.0,
         "temperature": "-48°C",
         "score": 94,
