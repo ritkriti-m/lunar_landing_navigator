@@ -400,10 +400,25 @@ if selected_name == "Haworth Crater (HW10)" and df_ephem is not None and not df_
     
     dynamic_score, status_warning = calculate_viability(sun_val, earth_val)
 
-time_col, azimuth_col, illumination_col = st.columns([1, 1, 1])
-time_col.metric("SIMULATION TIME", display_time)
-azimuth_col.metric("SOLAR ELEV (SQLITE)", dynamic_sun_elev)
-illumination_col.metric("EARTH ELEV (SQLITE)", dynamic_earth_elev)
+st.markdown(
+    f"""
+    <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+      <div style="background: #111515; border: 1px solid #303634; padding: 0.85rem 1rem;">
+        <span class="metric-label">SIMULATION TIME</span>
+        <div style="font-family: 'DM Mono', monospace; font-size: clamp(14px, 1.5vw, 20px); font-weight: 500; color: #edf0e9; margin-top: 4px;">{display_time}</div>
+      </div>
+      <div style="background: #111515; border: 1px solid #303634; padding: 0.85rem 1rem;">
+        <span class="metric-label">SOLAR ELEV (SQLITE)</span>
+        <div style="font-family: 'DM Mono', monospace; font-size: clamp(14px, 1.5vw, 20px); font-weight: 500; color: #dff86f; margin-top: 4px;">{dynamic_sun_elev}</div>
+      </div>
+      <div style="background: #111515; border: 1px solid #303634; padding: 0.85rem 1rem;">
+        <span class="metric-label">EARTH ELEV (SQLITE)</span>
+        <div style="font-family: 'DM Mono', monospace; font-size: clamp(14px, 1.5vw, 20px); font-weight: 500; color: #a7e7ff; margin-top: 4px;">{dynamic_earth_elev}</div>
+      </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 df_topo = get_topography_data()
 
