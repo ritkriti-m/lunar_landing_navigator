@@ -56,6 +56,12 @@ st.markdown(
       .site-card { margin: .85rem 0; padding: 1rem; border: 1px solid #39413f; background: linear-gradient(90deg, rgba(223,248,111,.07), #151919 60%); border-left: 2px solid #dff86f; }
       .site-card h3 { margin: 0 0 .35rem; font-size: 13px; font-weight: 600; color: #edf0e9 !important; }
       .site-card p { margin: 0; color: #9da6a3; font: 8px 'DM Mono', monospace; }
+      .detail { display: grid; grid-template-columns: minmax(280px, 2fr) repeat(2, minmax(140px, 1fr)); margin-top: .8rem; border: 1px solid #303634; background: #111515; }
+      .detail > div { padding: 1rem; }
+      .detail > div + div { border-left: 1px solid #303634; }
+      .detail h2 { margin: .25rem 0; font-size: 18px; font-weight: 500; color: #edf0e9 !important; }
+      .detail p { margin: 0; color: #9da6a3; font-size: 9px; line-height: 1.5; }
+      .detail strong { display: block; margin-top: .4rem; font: 500 15px 'DM Mono', monospace; color: #edf0e9; }
       .profile-head { display: flex; align-items: end; justify-content: space-between; padding: 1.5rem 0 1.2rem; border-bottom: 1px solid #303634; margin-bottom: 1.5rem; }
       .profile-head h1 { margin: .35rem 0 .25rem; font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.045em; color: #edf0e9 !important; }
       .profile-coords { color: #9da6a3; font: 10px 'DM Mono', monospace; }
@@ -151,7 +157,7 @@ SITES = {
         "elevation": "990.0 m",
         "illumination": 34.86,
         "accent": "#ff4b4b",
-        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis III candidate despite extreme lighting constraints.",
+        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis IV candidate despite extreme lighting constraints.",
         "terrain": "Steep crater walls leading down into a permanently shadowed floor.",
         "science": "Volatile water ice extraction, extreme thermal environment studies",
         "hazards": "Near-absolute zero temperatures, zero direct solar illumination in deep crater",
@@ -217,7 +223,7 @@ st.markdown(
     """
     <div class="brandbar">
       <span class="brand"><b>◐</b>&nbsp; LUNAR<em>/NAV</em></span>
-      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS III</span>
+      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS IV</span>
     </div>
     """,
     unsafe_allow_html=True,
