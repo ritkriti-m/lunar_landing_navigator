@@ -71,11 +71,9 @@ st.markdown(
 
 # --- DATABASE CONNECTION & AUTO-BUILD LOGIC ---
 def initialize_database():
-    db_path = os.path.join('data', 'haworth.db')
-    if os.path.exists(db_path):
-        return
-    
     os.makedirs('data', exist_ok=True)
+    db_path = os.path.join('data', 'haworth.db')
+    
     sun_path = os.path.join('data', 'HW10_sunlight_visibility.csv')
     earth_path = os.path.join('data', 'HW10_earth_visibility.csv')
     
@@ -131,6 +129,8 @@ def get_ephemeris_data():
     conn = sqlite3.connect(db_path)
     df = pd.read_sql_query("SELECT * FROM ephemeris", conn)
     conn.close()
+    if 'lunar_day' not in df.columns and len(df) > 0:
+        df['lunar_day'] = [round((i / max(1, len(df) - 1)) * 29.53, 2) for i in range(len(df))]
     return df
 
 @st.cache_data
@@ -151,7 +151,7 @@ SITES = {
         "elevation": "990.0 m",
         "illumination": 34.86,
         "accent": "#ff4b4b",
-        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis III candidate despite extreme lighting constraints.",
+        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis IV candidate despite extreme lighting constraints.",
         "terrain": "Steep crater walls leading down into a permanently shadowed floor.",
         "science": "Volatile water ice extraction, extreme thermal environment studies",
         "hazards": "Near-absolute zero temperatures, zero direct solar illumination in deep crater",
@@ -217,7 +217,7 @@ st.markdown(
     """
     <div class="brandbar">
       <span class="brand"><b>◐</b>&nbsp; LUNAR<em>/NAV</em></span>
-      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS III</span>
+      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS IV</span>
     </div>
     """,
     unsafe_allow_html=True,
@@ -302,7 +302,14 @@ if detail_name:
                 margin=dict(l=10, r=10, t=10, b=10),
                 legend=dict(orientation="v", yanchor="top", y=0.98, xanchor="right", x=0.98, title=""),
                 height=480,
-                xaxis=dict(title="Elapsed Lunar Day (Earth Days)", gridcolor="#303635", zeroline=False),
+                xaxis=dict(
+                    title="Elapsed Lunar Day (Earth Days)", 
+                    gridcolor="#303635", 
+                    zeroline=False,
+                    tickmode="array",
+                    tickvals=[0, 5, 10, 15, 20, 25, 29.5],
+                    ticktext=["Day 0", "Day 5", "Day 10", "Day 15", "Day 20", "Day 25", "Day 29.5"]
+                ),
                 yaxis=dict(title="Elevation angle (degrees)", gridcolor="#303635", zeroline=False)
             )
             st.plotly_chart(fig_line, use_container_width=True)
