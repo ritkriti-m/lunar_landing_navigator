@@ -56,12 +56,6 @@ st.markdown(
       .site-card { margin: .85rem 0; padding: 1rem; border: 1px solid #39413f; background: linear-gradient(90deg, rgba(223,248,111,.07), #151919 60%); border-left: 2px solid #dff86f; }
       .site-card h3 { margin: 0 0 .35rem; font-size: 13px; font-weight: 600; color: #edf0e9 !important; }
       .site-card p { margin: 0; color: #9da6a3; font: 8px 'DM Mono', monospace; }
-      .detail { display: grid; grid-template-columns: minmax(280px, 2fr) repeat(2, minmax(140px, 1fr)); margin-top: .8rem; border: 1px solid #303634; background: #111515; }
-      .detail > div { padding: 1rem; }
-      .detail > div + div { border-left: 1px solid #303634; }
-      .detail h2 { margin: .25rem 0; font-size: 18px; font-weight: 500; color: #edf0e9 !important; }
-      .detail p { margin: 0; color: #9da6a3; font-size: 9px; line-height: 1.5; }
-      .detail strong { display: block; margin-top: .4rem; font: 500 15px 'DM Mono', monospace; color: #edf0e9; }
       .profile-head { display: flex; align-items: end; justify-content: space-between; padding: 1.5rem 0 1.2rem; border-bottom: 1px solid #303634; margin-bottom: 1.5rem; }
       .profile-head h1 { margin: .35rem 0 .25rem; font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.045em; color: #edf0e9 !important; }
       .profile-coords { color: #9da6a3; font: 10px 'DM Mono', monospace; }
@@ -394,7 +388,7 @@ if df_topo is not None and not df_topo.empty:
         img = Image.open(img_path)
         fig.add_layout_image(dict(
             source=img, xref="x", yref="y", x=-33.0, y=-86.4, sizex=21.0, sizey=0.8, 
-            sizing="stretch", opacity=0.85, layer="below"
+            sizing="contain", opacity=0.85, layer="below"
         ))
     
     fig.update_layout(**layout_args)
