@@ -376,8 +376,8 @@ if df_topo is not None and not df_topo.empty:
         margin=dict(l=10, r=10, b=10, t=10),
         paper_bgcolor="#171b1b",
         plot_bgcolor="#171b1b",
-        xaxis=dict(title="Longitude", range=[-33.0, -12.0], gridcolor="#303635", zeroline=False),
-        yaxis=dict(title="Latitude", range=[-87.2, -86.4], scaleanchor="x", scaleratio=16.5, gridcolor="#303635", zeroline=False), 
+        xaxis=dict(title="Longitude", gridcolor="#303635", zeroline=False),
+        yaxis=dict(title="Latitude", gridcolor="#303635", zeroline=False), 
         hovermode="closest",
         dragmode="pan",
         height=550,
@@ -388,7 +388,7 @@ if df_topo is not None and not df_topo.empty:
         img = Image.open(img_path)
         fig.add_layout_image(dict(
             source=img, xref="x", yref="y", x=-33.0, y=-86.4, sizex=21.0, sizey=0.8, 
-            sizing="contain", opacity=0.85, layer="below"
+            sizing="stretch", opacity=0.85, layer="below"
         ))
     
     fig.update_layout(**layout_args)
