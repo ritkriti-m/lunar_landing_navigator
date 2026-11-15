@@ -56,12 +56,6 @@ st.markdown(
       .site-card { margin: .85rem 0; padding: 1rem; border: 1px solid #39413f; background: linear-gradient(90deg, rgba(223,248,111,.07), #151919 60%); border-left: 2px solid #dff86f; }
       .site-card h3 { margin: 0 0 .35rem; font-size: 13px; font-weight: 600; color: #edf0e9 !important; }
       .site-card p { margin: 0; color: #9da6a3; font: 8px 'DM Mono', monospace; }
-      .detail { display: grid; grid-template-columns: minmax(280px, 2fr) repeat(2, minmax(140px, 1fr)); margin-top: .8rem; border: 1px solid #303634; background: #111515; }
-      .detail > div { padding: 1rem; }
-      .detail > div + div { border-left: 1px solid #303634; }
-      .detail h2 { margin: .25rem 0; font-size: 18px; font-weight: 500; color: #edf0e9 !important; }
-      .detail p { margin: 0; color: #9da6a3; font-size: 9px; line-height: 1.5; }
-      .detail strong { display: block; margin-top: .4rem; font: 500 15px 'DM Mono', monospace; color: #edf0e9; }
       .profile-head { display: flex; align-items: end; justify-content: space-between; padding: 1.5rem 0 1.2rem; border-bottom: 1px solid #303634; margin-bottom: 1.5rem; }
       .profile-head h1 { margin: .35rem 0 .25rem; font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.045em; color: #edf0e9 !important; }
       .profile-coords { color: #9da6a3; font: 10px 'DM Mono', monospace; }
@@ -104,7 +98,6 @@ def initialize_database():
     else:
         merged_ephem = pd.DataFrame(columns=['timestamp', 'sun_elevation', 'terrain_horizon_sun', 'earth_elevation', 'terrain_horizon_earth'])
 
-    # Add relative lunar day index (0.0 to ~29.5 Earth days across rows)
     total_rows = len(merged_ephem)
     if total_rows > 0:
         merged_ephem['lunar_day'] = [round((i / max(1, total_rows - 1)) * 29.53, 2) for i in range(total_rows)]
@@ -152,8 +145,8 @@ def get_topography_data():
 
 # --- SITE DATA ---
 SITES = {
-    "Haworth Crater (HW10)": {
-        "subtitle": "South Pole",
+    "Haworth Crater": {
+        "subtitle": "South Pole · HW10",
         "coords": "86.527° S  14.876° W",
         "elevation": "990.0 m",
         "illumination": 34.86,
@@ -413,7 +406,7 @@ if df_topo is not None and not df_topo.empty:
         point_idx = point_data.get("point_index") if isinstance(point_data, dict) else getattr(point_data, "point_index", -1)
         if point_idx is not None and 0 <= point_idx < len(df_topo):
             clicked_site_id = df_topo.iloc[point_idx]['site'] 
-            target_key = next((key for key in SITES.keys() if clicked_site_id in key), None)
+            target_key = "Haworth Crater" if clicked_site_id == "HW10" else next((key for key in SITES.keys() if clicked_site_id in key), None)
             if target_key:
                 slug = target_key.lower().replace(" ", "-")
                 if st.query_params.get("site") != slug:
@@ -421,20 +414,3 @@ if df_topo is not None and not df_topo.empty:
                     if "map_plot" in st.session_state:
                         del st.session_state["map_plot"]
                     st.rerun()
-
-st.markdown(
-    f"""
-    <section class="detail">
-      <div>
-        <span class="metric-label">SELECTED LANDING LOCATION</span>
-        <h2>{html.escape(selected_name)}</h2>
-        <p>{selected['brief']}</p>
-      </div>
-      <div><span class="metric-label">ELEVATION</span>
-        <strong>{selected['elevation']}</strong></div>
-      <div><span class="metric-label">ILLUMINATION</span>
-        <strong>{selected['illumination']}%</strong></div>
-    </section>
-    """,
-    unsafe_allow_html=True,
-)
