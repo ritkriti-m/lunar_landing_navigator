@@ -151,7 +151,7 @@ SITES = {
         "elevation": "990.0 m",
         "illumination": 34.86,
         "accent": "#ff4b4b",
-        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis IV candidate despite extreme lighting constraints.",
+        "brief": "Deep permanently shadowed region containing high concentrations of volatile water ice, making it a prime Artemis III candidate despite extreme lighting constraints.",
         "terrain": "Steep crater walls leading down into a permanently shadowed floor.",
         "science": "Volatile water ice extraction, extreme thermal environment studies",
         "hazards": "Near-absolute zero temperatures, zero direct solar illumination in deep crater",
@@ -217,7 +217,7 @@ st.markdown(
     """
     <div class="brandbar">
       <span class="brand"><b>◐</b>&nbsp; LUNAR<em>/NAV</em></span>
-      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS IV</span>
+      <span class="telemetry"><i></i>LIVE SIMULATION &nbsp;&nbsp; ARTEMIS III</span>
     </div>
     """,
     unsafe_allow_html=True,
